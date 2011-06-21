@@ -1,5 +1,6 @@
 package main.java.com.lonelydime.ItemId;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -77,7 +78,15 @@ public class ItemId extends JavaPlugin{
 			else {
 				if (sender instanceof Player) {
 					Player player = (Player)sender;
-					player.sendMessage(player.getItemInHand().getType().name()+": "+Integer.toString(player.getItemInHand().getTypeId()));
+					String itemInHand = Integer.toString(player.getItemInHand().getTypeId());
+					if(itemInHand.equalsIgnoreCase("air"))
+					{
+						player.sendMessage(ChatColor.RED + "You aren't holding anything!");
+					}
+					else
+					{
+						player.sendMessage(player.getItemInHand().getType().name()+": "+ itemInHand);
+					}
 				}
 				else {
 					return true;
