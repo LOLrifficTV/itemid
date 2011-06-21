@@ -85,7 +85,7 @@ public class ItemId extends JavaPlugin{
 					}
 					else
 					{
-						player.sendMessage(player.getItemInHand().getType().name()+": "+ itemInHand);
+						player.sendMessage(ChatColor.LIGHT_PURPLE+player.getItemInHand().getType().name()+": "+ itemInHand);
 					}
 				}
 				else {

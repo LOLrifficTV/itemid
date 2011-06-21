@@ -1,5 +1,6 @@
 package main.java.com.lonelydime.ItemId;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerChatEvent;
@@ -28,10 +29,10 @@ public class ItemIdPlayerListener extends PlayerListener{
 			  try {
 			    int dataid = Integer.parseInt(split[1]);
 			    try {
-			    	player.sendMessage(Material.getMaterial(dataid).toString());
+			    	player.sendMessage(ChatColor.LIGHT_PURPLE+Material.getMaterial(dataid).toString());
 			    }
 			    catch (NullPointerException e) {
-			    	player.sendMessage("Item does not exist");
+			    	player.sendMessage(ChatColor.RED+"Item does not exist");
 			    }
 
 			  } catch (NumberFormatException e) {
@@ -42,10 +43,10 @@ public class ItemIdPlayerListener extends PlayerListener{
 				  	datastring = datastring.toUpperCase();
 
 				    try {
-				    	player.sendMessage(datastring+": "+Integer.toString(Material.getMaterial(datastring).getId() ) );
+				    	player.sendMessage(ChatColor.LIGHT_PURPLE+datastring+": "+Integer.toString(Material.getMaterial(datastring).getId() ) );
 				    }
 				    catch (NullPointerException n) {
-				    	player.sendMessage("Item does not exist");
+				    	player.sendMessage(ChatColor.RED+"Item does not exist");
 				    }
 			  }
 
