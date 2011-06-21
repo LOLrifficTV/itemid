@@ -79,7 +79,7 @@ public class ItemId extends JavaPlugin{
 				if (sender instanceof Player) {
 					Player player = (Player)sender;
 					String itemInHand = Integer.toString(player.getItemInHand().getTypeId());
-					if(itemInHand.equalsIgnoreCase("air"))
+					if(itemInHand.equalsIgnoreCase("0"))
 					{
 						player.sendMessage(ChatColor.RED + "You aren't holding anything!");
 					}
