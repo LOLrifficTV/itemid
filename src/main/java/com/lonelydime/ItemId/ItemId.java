@@ -1,5 +1,7 @@
 package main.java.com.lonelydime.ItemId;
 
+import java.util.logging.Logger;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -13,9 +15,12 @@ import com.nijikokun.bukkit.Permissions.Permissions;
 import com.nijiko.permissions.PermissionHandler;
 
 public class ItemId extends JavaPlugin{
+	
 	public static PermissionHandler Permissions = null;
+	public static final Logger logger = Logger.getLogger("Minecraft.ItemID");
+	
 	public void onDisable() {
-		System.out.println("ItemId Disabled");
+		logger.info("ItemId Disabled");
 	}
 
 	public void onEnable() {      
@@ -24,7 +29,7 @@ public class ItemId extends JavaPlugin{
         //Print that the plugin has been enabled!
         
         setupPermissions();
-        System.out.println( pdfFile.getName() + " " + pdfFile.getVersion() + " by lonelydime (maintained by TexasGamer) enabled!");
+        logger.info( pdfFile.getName() + " " + pdfFile.getVersion() + " enabled.");
 	}
 	
 	public void setupPermissions() {
@@ -94,7 +99,6 @@ public class ItemId extends JavaPlugin{
 			}
 
 		}
-		
 		return true;
 	}
 }
