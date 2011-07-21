@@ -1,5 +1,13 @@
 package main.java.com.lonelydime.ItemId;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.logging.Logger;
 
 import org.bukkit.ChatColor;
@@ -16,21 +24,96 @@ import com.nijiko.permissions.PermissionHandler;
 
 public class ItemId extends JavaPlugin{
 	
+	private static String propFile = "itemid.properties";
 	public static PermissionHandler Permissions = null;
 	public static final Logger logger = Logger.getLogger("Minecraft.ItemID");
+	private static iProperty props;
+	public static String searchType = "all";
+	public static String dataXml = "search-ids-data.xml";
+	public static String updateSource = "https://raw.github.com/mrapple/SearchIds/master/search-ids-data.xml";
+	public static boolean autoUpdate = true;
+	public static String base = "decimal";
+	public static String baseId = "decimal";
+	public static int nameWidth = 24;
+	public static int numWidth = 4;
+	public static String delimiter = "-";
+	public static int autoUpdateInterval = 86400;
+	public static DataParser parser;
+	private UpdateThread updateThread;
 	
 	public void onDisable() {
 		logger.info("ItemId Disabled");
 	}
 
-	public void onEnable() {      
-        //Get the infomation from the yml file.
-        PluginDescriptionFile pdfFile = this.getDescription();
-        //Print that the plugin has been enabled!
-        
+	public void onEnable() {
+		PluginDescriptionFile pdfFile = this.getDescription();
         setupPermissions();
-        logger.info( pdfFile.getName() + " " + pdfFile.getVersion() + " enabled.");
+        logger.info(pdfFile.getName() + " " + pdfFile.getVersion() + " enabled.");
+        
+        if (!initProps()) {
+            logger.severe(pdfFile.getName() + ": Could not initialise " + propFile);
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+          }
+        
+        if (parser == null) {
+            parser = new DataParser();
+          }
+          if (!initData()) {
+            logger.severe(pdfFile.getName() + ": Could not init the search data from: " + dataXml + ". Please check that the file exists and is not corrupt.");
+            if (!autoUpdate) {
+              logger.severe(pdfFile.getName() + ": Set auto-update-data=true in " + propFile + " to automatically download the search data file " + dataXml);
+            }
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+          }
+
+          if (autoUpdate) {
+            if (this.updateThread == null)
+              this.updateThread = new UpdateThread(this);
+            this.updateThread.start();
+          }
 	}
+	
+	public boolean initProps() {
+	    File localFile1 = new File("plugins/ItemID/");
+	    localFile1.mkdir();
+
+	    props = new iProperty("plugins/ItemID/" + propFile);
+
+	    searchType = props.getString("search-type", "all");
+	    base = props.getString("base", "decimal");
+	    baseId = props.getString("base-id", "decimal");
+	    dataXml = props.getString("data-xml", "search-ids-data.xml");
+	    updateSource = props.getString("update-source", "https://raw.github.com/mrapple/SearchIds/master/search-ids-data.xml");
+	    autoUpdate = props.getBoolean("auto-update-data", true);
+	    autoUpdateInterval = props.getInt("auto-update-interval", 86400);
+	    nameWidth = props.getInt("width-blockname", 24);
+	    numWidth = props.getInt("width-number", 4);
+	    delimiter = props.getString("delimiter", "-");
+
+	    if (autoUpdateInterval < 600) {
+	      autoUpdateInterval = 600;
+	      PluginDescriptionFile pdfFile = this.getDescription();
+	      logger.info(pdfFile.getName() + ": auto-update-interval cannot be less than 600");
+	    }
+
+	    File localFile2 = new File("plugins/ItemID/" + propFile);
+	    return localFile2.exists();
+	  }
+	
+	public boolean initData() {
+	    if ((dataXml == null) || (dataXml.equals(""))) {
+	      return false;
+	    }
+
+	    File localFile = new File("plugins/ItemID/" + dataXml);
+	    if ((!updateData()) && (!localFile.exists())) {
+	      return false;
+	    }
+
+	    return parser.search("test") != null;
+	  }
 	
 	public void setupPermissions() {
 		Plugin test = this.getServer().getPluginManager().getPlugin("Permissions");
@@ -102,8 +185,82 @@ public class ItemId extends JavaPlugin{
 		
 		if(command.equalsIgnoreCase("find") && canUseCommand)
 		{
-			sender.sendMessage("Coming soon...");
+			if (args.length > 0) {
+		        String str2 = "";
+		        for (int i = 0; i < args.length; i++) {
+		          str2 = str2 + args[i] + " ";
+		        }
+		        str2 = str2.trim();
+		        printSearchResults(sender, parser.search(str2, base), str2);
+		        return true;
+		      }
+		      return false;
 		}
 		return true;
 	}
+	
+	public boolean updateData() {
+	    if (autoUpdate) {
+	      try {
+	    	 
+	        URL localURL = new URL(updateSource);
+	        PluginDescriptionFile pdfFile = this.getDescription();
+	        logger.info(pdfFile.getName() + ": Updating data from " + updateSource + "...");
+	        InputStream localInputStream = localURL.openStream();
+	        FileOutputStream localFileOutputStream = null;
+	        localFileOutputStream = new FileOutputStream("plugins/ItemID/" + dataXml);
+	        int j = 0;
+	        int i;
+	        while ((i = localInputStream.read()) != -1) {
+	          localFileOutputStream.write(i);
+	          j++;
+	        }
+	        localInputStream.close();
+	        localFileOutputStream.close();
+	        logger.info(pdfFile.getName() + ": Update complete!");
+	        return true;
+	      } catch (MalformedURLException localMalformedURLException) {
+	        logger.severe(localMalformedURLException.toString());
+	      } catch (IOException localIOException) {
+	        logger.severe(localIOException.toString());
+	      }
+	      PluginDescriptionFile pdfFile = this.getDescription();
+	      logger.info(pdfFile.getName() + ": Could not update search data.");
+	      return false;
+	    }
+	    return true;
+	  }
+	
+	public void printSearchResults(CommandSender paramCommandSender, ArrayList<Result> paramArrayList, String paramString)
+	  {
+	    if ((paramArrayList != null) && (paramArrayList.size() > 0)) {
+	      paramCommandSender.sendMessage(ChatColor.AQUA + "Search results for \"" + paramString + "\":");
+	      Iterator localIterator = paramArrayList.iterator();
+	      String str = "";
+	      int i = 0;
+	      while (localIterator.hasNext()) {
+	        i++;
+	        Result localResult = (Result)localIterator.next();
+	        str = str + rightPad(localResult.getFullValue(), localResult.getValuePad()) + " " + delimiter + " " + rightPad(localResult.getName(), nameWidth);
+	        if ((i % 2 == 0) || (!localIterator.hasNext())) {
+	          paramCommandSender.sendMessage(ChatColor.GOLD + str.trim());
+	          str = "";
+	        }
+	        if (i > 16) {
+	          paramCommandSender.sendMessage(ChatColor.RED + "Not all results are displayed. Make your term more specific!");
+	          break;
+	        }
+	      }
+	    } else {
+	      paramCommandSender.sendMessage(ChatColor.RED + "No results found");
+	    }
+	  }
+
+	  public static String leftPad(String paramString, int paramInt) {
+	    return String.format("%" + paramInt + "s", new Object[] { paramString });
+	  }
+
+	  public static String rightPad(String paramString, int paramInt) {
+	    return String.format("%-" + paramInt + "s", new Object[] { paramString });
+	  }
 }
