@@ -52,7 +52,7 @@ public class ItemId extends JavaPlugin{
 			}
 		}
 		
-		if (command.equals("itemid") && canUseCommand) {
+		if (command.equalsIgnoreCase("itemid") && canUseCommand) {
 			if (args.length >= 1) {
 			  try {
 			    int dataid = Integer.parseInt(args[0]);
@@ -98,6 +98,11 @@ public class ItemId extends JavaPlugin{
 				}
 			}
 
+		}
+		
+		if(command.equalsIgnoreCase("find") && canUseCommand)
+		{
+			sender.sendMessage("Coming soon...");
 		}
 		return true;
 	}
