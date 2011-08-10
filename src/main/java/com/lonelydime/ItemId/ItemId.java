@@ -205,7 +205,7 @@ public class ItemId extends JavaPlugin{
 	    	 
 	        URL localURL = new URL(updateSource);
 	        PluginDescriptionFile pdfFile = this.getDescription();
-	        logger.info(pdfFile.getName() + ": Updating data from " + updateSource + "...");
+	        logger.info(pdfFile.getName() + ": Updating data...");
 	        InputStream localInputStream = localURL.openStream();
 	        FileOutputStream localFileOutputStream = null;
 	        localFileOutputStream = new FileOutputStream("plugins/ItemID/" + dataXml);
