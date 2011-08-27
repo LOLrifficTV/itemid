@@ -12,3 +12,15 @@ commands:
     find:
         description: Search for items and blocks
         usage: /<command> [search query]
+permissions:
+    itemid.*:
+        description: Gives access to all commands
+        children:
+            itemid.usecmd: true
+            itemid.find: true
+    itemid.usecmd:
+        description: Allows usage of /itemid
+        default: true
+    itemid.find:
+        description: Allows usage of /find
+        default: true

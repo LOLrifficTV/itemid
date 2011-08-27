@@ -18,7 +18,29 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.permissions.*;
+/*
+ * Portions of this software are Copyright (c) 2010 croemmich
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+  -----------------------------------------------------------------------------
+ * Remaining portions are (c) TexasGamer - Licensed under the TexasGamer Software License
+ */
 public class ItemId extends JavaPlugin{
 	
 	private static String propFile = "itemid.properties";
@@ -116,11 +138,11 @@ public class ItemId extends JavaPlugin{
 		String command = cmd.getName();
 		
 		if (sender instanceof Player) {
-			//canUseCommand = sender.hasPermission("itemid.usecmd");
-			//canUseFind = sender.hasPermission("itemid.find");
+			canUseCommand = sender.hasPermission("itemid.usecmd");
+			canUseFind = sender.hasPermission("itemid.find");
 		}
 		
-		if (command.equalsIgnoreCase("itemid")) {
+		if (command.equalsIgnoreCase("itemid") && canUseCommand) {
 			if (args.length >= 1) {
 			  try {
 			    int dataid = Integer.parseInt(args[0]);
@@ -168,7 +190,7 @@ public class ItemId extends JavaPlugin{
 
 		}
 		
-		if(command.equalsIgnoreCase("find"))
+		if(command.equalsIgnoreCase("find") && canUseFind)
 		{
 			if (args.length > 0) {
 		        String str2 = "";
