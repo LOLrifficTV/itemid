@@ -29,7 +29,7 @@ public class ItemId extends JavaPlugin{
 	public static final Logger logger = Logger.getLogger("Minecraft.ItemID");
 	private static iProperty props;
 	public static String searchType = "all";
-	public static String dataXml = "search-ids-data.xml";
+	public static String dataXml = "item-data.xml";
 	public static String updateSource = "https://raw.github.com/TexasGamer/itemid/master/item-data.xml";
 	public static boolean autoUpdate = true;
 	public static String base = "decimal";
@@ -84,7 +84,7 @@ public class ItemId extends JavaPlugin{
 	    searchType = props.getString("search-type", "all");
 	    base = props.getString("base", "decimal");
 	    baseId = props.getString("base-id", "decimal");
-	    dataXml = props.getString("data-xml", "search-ids-data.xml");
+	    dataXml = props.getString("data-xml", "item-data.xml");
 	    updateSource = props.getString("update-source", "https://raw.github.com/TexasGamer/itemid/master/item-data.xml");
 	    autoUpdate = props.getBoolean("auto-update-data", true);
 	    autoUpdateInterval = props.getInt("auto-update-interval", 86400);
