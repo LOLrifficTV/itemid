@@ -25,7 +25,6 @@ import com.nijiko.permissions.PermissionHandler;
 public class ItemId extends JavaPlugin{
 	
 	private static String propFile = "itemid.properties";
-	public static PermissionHandler Permissions = null;
 	public static final Logger logger = Logger.getLogger("Minecraft.ItemID");
 	private static iProperty props;
 	public static String searchType = "all";
@@ -42,12 +41,11 @@ public class ItemId extends JavaPlugin{
 	private UpdateThread updateThread;
 	
 	public void onDisable() {
-		logger.info("ItemId Disabled");
+		logger.info("ItemID Disabled");
 	}
 
 	public void onEnable() {
 		PluginDescriptionFile pdfFile = this.getDescription();
-        setupPermissions();
         logger.info(pdfFile.getName() + " " + pdfFile.getVersion() + " enabled.");
         
         if (!initProps()) {
@@ -115,24 +113,14 @@ public class ItemId extends JavaPlugin{
 	    return parser.search("test") != null;
 	  }
 	
-	public void setupPermissions() {
-		Plugin test = this.getServer().getPluginManager().getPlugin("Permissions");
-
-		if(Permissions == null) {
-		    if(test != null) {
-		    	Permissions = ((Permissions)test).getHandler();
-		    }
-		}
-	}
-	
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		boolean canUseCommand = true;
+		boolean canUseFind = true;
 		String command = cmd.getName();
 		
 		if (sender instanceof Player) {
-			if (ItemId.Permissions != null) {
-				canUseCommand = Permissions.has((Player)sender, "itemid.usecmd");
-			}
+			canUseCommand = sender.hasPermission("itemid.usecmd");
+			canUseFind = sender.hasPermission("itemid.find");
 		}
 		
 		if (command.equalsIgnoreCase("itemid") && canUseCommand) {
@@ -183,7 +171,7 @@ public class ItemId extends JavaPlugin{
 
 		}
 		
-		if(command.equalsIgnoreCase("find") && canUseCommand)
+		if(command.equalsIgnoreCase("find") && canUseFind)
 		{
 			if (args.length > 0) {
 		        String str2 = "";
@@ -252,7 +240,7 @@ public class ItemId extends JavaPlugin{
 	        }
 	      }
 	    } else {
-	      paramCommandSender.sendMessage(ChatColor.RED + "No results found");
+	      paramCommandSender.sendMessage(ChatColor.RED + "No results found!");
 	    }
 	  }
 
