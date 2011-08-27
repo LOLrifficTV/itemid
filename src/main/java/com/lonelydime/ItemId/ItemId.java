@@ -15,12 +15,9 @@ import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import com.nijikokun.bukkit.Permissions.Permissions;
-import com.nijiko.permissions.PermissionHandler;
+import org.bukkit.permissions.*;
 
 public class ItemId extends JavaPlugin{
 	
@@ -119,11 +116,11 @@ public class ItemId extends JavaPlugin{
 		String command = cmd.getName();
 		
 		if (sender instanceof Player) {
-			canUseCommand = sender.hasPermission("itemid.usecmd");
-			canUseFind = sender.hasPermission("itemid.find");
+			//canUseCommand = sender.hasPermission("itemid.usecmd");
+			//canUseFind = sender.hasPermission("itemid.find");
 		}
 		
-		if (command.equalsIgnoreCase("itemid") && canUseCommand) {
+		if (command.equalsIgnoreCase("itemid")) {
 			if (args.length >= 1) {
 			  try {
 			    int dataid = Integer.parseInt(args[0]);
@@ -171,7 +168,7 @@ public class ItemId extends JavaPlugin{
 
 		}
 		
-		if(command.equalsIgnoreCase("find") && canUseFind)
+		if(command.equalsIgnoreCase("find"))
 		{
 			if (args.length > 0) {
 		        String str2 = "";

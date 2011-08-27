@@ -15,15 +15,6 @@
   </repositories>
 
   <dependencies> 
-    <!--  Permissions -->
-    <dependency>
-      <groupId>com.nijikokun.bukkit</groupId>
-      <artifactId>Permissions</artifactId>
-      <version>3.0.6</version>
-      <type>jar</type>
-      <scope>system</scope>
-      <systemPath>${basedir}/Permissions.jar</systemPath>
-    </dependency>
     <!-- Bukkit -->
     <dependency>
       <groupId>org.bukkit</groupId>
