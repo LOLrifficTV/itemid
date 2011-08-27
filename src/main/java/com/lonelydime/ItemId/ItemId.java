@@ -60,7 +60,7 @@ public class ItemId extends JavaPlugin{
             parser = new DataParser();
           }
           if (!initData()) {
-            logger.severe(pdfFile.getName() + ": Could not init the search data from: " + dataXml + ". Please check that the file exists and is not corrupt.");
+            logger.severe(pdfFile.getName() + ": An error occured while reading: " + dataXml + ".");
             if (!autoUpdate) {
               logger.severe(pdfFile.getName() + ": Set auto-update-data=true in " + propFile + " to automatically download the search data file " + dataXml);
             }
@@ -247,7 +247,7 @@ public class ItemId extends JavaPlugin{
 	          str = "";
 	        }
 	        if (i > 16) {
-	          paramCommandSender.sendMessage(ChatColor.RED + "Not all results are displayed. Make your term more specific!");
+	          paramCommandSender.sendMessage(ChatColor.RED + "Too many results found! Be more specific...");
 	          break;
 	        }
 	      }
