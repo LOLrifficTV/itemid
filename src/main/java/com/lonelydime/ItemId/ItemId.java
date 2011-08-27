@@ -30,7 +30,7 @@ public class ItemId extends JavaPlugin{
 	private static iProperty props;
 	public static String searchType = "all";
 	public static String dataXml = "search-ids-data.xml";
-	public static String updateSource = "https://raw.github.com/mrapple/SearchIds/master/search-ids-data.xml";
+	public static String updateSource = "https://raw.github.com/TexasGamer/itemid/master/item-data.xml";
 	public static boolean autoUpdate = true;
 	public static String base = "decimal";
 	public static String baseId = "decimal";
@@ -85,7 +85,7 @@ public class ItemId extends JavaPlugin{
 	    base = props.getString("base", "decimal");
 	    baseId = props.getString("base-id", "decimal");
 	    dataXml = props.getString("data-xml", "search-ids-data.xml");
-	    updateSource = props.getString("update-source", "https://raw.github.com/mrapple/SearchIds/master/search-ids-data.xml");
+	    updateSource = props.getString("update-source", "https://raw.github.com/TexasGamer/itemid/master/item-data.xml");
 	    autoUpdate = props.getBoolean("auto-update-data", true);
 	    autoUpdateInterval = props.getInt("auto-update-interval", 86400);
 	    nameWidth = props.getInt("width-blockname", 24);
