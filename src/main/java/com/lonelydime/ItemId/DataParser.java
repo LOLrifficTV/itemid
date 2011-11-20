@@ -35,7 +35,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class DataParser
 {
-  protected static final Logger log = Logger.getLogger("Minecraft.ItemId");
+  protected static final Logger log = Logger.getLogger("Minecraft.ItemID");
 
   public ArrayList<Result> search(String paramString)
   {
@@ -48,7 +48,7 @@ public class DataParser
       SAXParser localSAXParser = localSAXParserFactory.newSAXParser();
       DataHandler localDataHandler = new DataHandler();
       localDataHandler.setPattern(Pattern.compile(".*?" + Pattern.quote(paramString1) + ".*", 2));
-      localSAXParser.parse("plugins/ItemId/" + ItemId.dataXml, localDataHandler);
+      localSAXParser.parse("plugins/ItemID/" + ItemId.dataXml, localDataHandler);
       return localDataHandler.getResults();
     } catch (Exception localException) {
       localException.printStackTrace();
