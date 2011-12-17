@@ -1,4 +1,4 @@
-package main.java.com.lonelydime.ItemId;
+package com.lonelydime.ItemId;
 /*
  * Portions of this software are Copyright (c) 2010 croemmich
  *

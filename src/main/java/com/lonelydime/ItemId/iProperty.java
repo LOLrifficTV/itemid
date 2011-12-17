@@ -1,4 +1,4 @@
-package main.java.com.lonelydime.ItemId;
+package com.lonelydime.ItemId;
 
 import java.io.BufferedReader;
 import java.io.File;

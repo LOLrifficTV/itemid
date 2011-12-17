@@ -1,4 +1,4 @@
-package main.java.com.lonelydime.ItemId;
+package com.lonelydime.ItemId;
 
 import java.util.ArrayList;
 import java.util.logging.Logger;
