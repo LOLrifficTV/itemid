@@ -34,7 +34,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 public class DataParser {
-	protected static final Logger log = Logger.getLogger("Minecraft.ItemID");
+	protected static final Logger log = Logger.getLogger("Minecraft");
 
 	public ArrayList<Result> search(String paramString)
 	{

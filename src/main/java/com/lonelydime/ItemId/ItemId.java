@@ -42,10 +42,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.lonelydime.ItemId.hooks.ItemIDMetrics;
+
+
 public class ItemId extends JavaPlugin{
 	
 	private static String propFile = "itemid.properties";
-	public static final Logger logger = Logger.getLogger("Minecraft.ItemID");
+	public static final Logger logger = Logger.getLogger("Minecraft");
 	private static iProperty props;
 	public static String searchType = "all";
 	public static String dataXml = "item-data.xml";
@@ -60,17 +63,22 @@ public class ItemId extends JavaPlugin{
 	public static int autoUpdateInterval = 86400;
 	public static DataParser parser;
 	private UpdateThread updateThread;
+	private ItemIDStats stats;
 	
 	public void onDisable() {
-		logger.info("ItemID Disabled");
+		logger.info("[ItemID] " + getDescription().getName() + " " + getDescription().getVersion() + " disabled.");
 	}
 
 	public void onEnable() {
+		stats = new ItemIDStats();
+		ItemIDMetrics.setupMetrics(this, stats);
+		
+		
 		PluginDescriptionFile pdfFile = this.getDescription();
-        logger.info(pdfFile.getName() + " " + pdfFile.getVersion() + " enabled.");
+        logger.info("[ItemID] " + pdfFile.getName() + " " + pdfFile.getVersion() + " enabled.");
         
         if (!initProps()) {
-        	logger.severe(pdfFile.getName() + ": Could not initialise " + propFile);
+        	logger.severe("[ItemID] " + pdfFile.getName() + ": Could not initialise " + propFile);
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
@@ -201,6 +209,7 @@ public class ItemId extends JavaPlugin{
 		
 		if(command.equalsIgnoreCase("find") && canUseFind)
 		{
+			stats.increaseSearches();
 			if (args.length > 0) {
 				String str2 = "";
 		        
