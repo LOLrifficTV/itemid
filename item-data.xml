@@ -133,7 +133,10 @@
         <item hex="5F" dec="95" name="Locked Chest" />
         <item hex="60" dec="96" name="Trapdoor" />
         <item hex="61" dec="97" name="Hidden Silverfish" />
-        <item hex="62" dec="98" name="Stone Brick" />
+        <item hex="62" dec="98" id="0" name="Stone Brick" />
+        <item hex="62" dec="98" id="1" name="Stone Brick (mossy)" />
+        <item hex="62" dec="98" id="2" name="Stone Brick (cracked)" />
+        <item hex="62" dec="98" id="3" name="Stone Brick (circle)" />
         <item hex="63" dec="99" id="0" name="Huge Brown Mushroom (all pores)" />
         <item hex="63" dec="99" id="1" name="Huge Brown Mushroom (top/north/west cap)" />
         <item hex="63" dec="99" id="2" name="Huge Brown Mushroom (top/noth cap)" />
@@ -178,6 +181,8 @@
         <item hex="78" dec="120" name="End Portal Frame" />
         <item hex="79" dec="121" name="End Stone" />
         <item hex="7A" dec="122" name="Dragon Egg" />
+        <item hex="7B" dec="123" name="Redstone Lamp (off)" />
+        <item hex="7C" dec="124" name="Redstone Lamp (on)" />
     </blocks>
     <items>
         <item hex="100" dec="256" name="Iron Shovel" />
@@ -323,6 +328,9 @@
         <item hex="17C" dec="380" name="Cauldron" />
         <item hex="17D" dec="381" name="Eye of Ender" />
         <item hex="17E" dec="382" name="Glistering Melon" />
+        <item hex="17F" dec="383" name="Spawn Egg" />
+        <item hex="180" dec="384" name="Bottle o' Enchanting" />
+        <item hex="181" dec="385" name="Fire Charge" />
         <item hex="8D0" dec="2256" name="Gold Music Disc (13)" />
         <item hex="8D1" dec="2257" name="Green Music Disc (cat)" />
         <item hex="8D2" dec="2258" name="Orange Music Disc (blocks)" />
